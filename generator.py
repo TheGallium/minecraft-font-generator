@@ -400,7 +400,25 @@ def make_ufo():
 
 def compile_font():
 	""" STEP 3 """
+	try:
+		import fontmake
+	except ImportError:
+		if not internet():
+			print("You need an Internet connection to install the fontmake module\nPlease install it manually.")
+			exit(1)
+
+		print("fontmake is not installed. Installing now...\n\n")
+		os.system(f"{executable} -m pip install fontmake")
+		try:
+			import fontmake
+		except ImportError:
+			print("\n\nFailed to install the fontmake module!\nPlease install it manually.")
+			exit(1)
+		else:
+			print("fontmake installed successfully.\n\n")
+	
 	print()
+	os.system("fontmake -u assets/font/ufo/default.ufo --output-dir assets/font/generated_fonts/ -o ttf")
 
 
 
